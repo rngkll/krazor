@@ -4,6 +4,7 @@ molecule[docker]
 PyYAML
 requests
 setuptools
+sphinx==2.1.1
 sphinxcontrib-restbuilder
 sphinxcontrib-globalsubs
 sphinx-prompt

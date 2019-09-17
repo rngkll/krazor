@@ -1,4 +1,4 @@
 License
 ------------------------------------------------------------------------------
 
-.. include:: parts/license/mit.inc
+.. include:: parts/license-repo/mit.inc
