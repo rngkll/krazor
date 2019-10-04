@@ -1,27 +1,9 @@
 ---
-- name: Add puppetlabs repository
-  yum:
-        name: http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
-        state: present
-
-- name: Install packages
-  yum:
-        name:
-              - razor-server
-              - rubygems
-              - ipmitool
-        state: present
-
-- name: Apply razor configuration file
-  template:
-        src: templates/config.yaml.j2
-        dest: /etc/puppetlabs/razor-server/config.yaml
-
-- name: Download microkernel
-  unarchive:
-        src: http://pup.pt/razor-microkernel-latest
-        dest: /opt/puppetlabs/server/data/razor-server/repo
-        remote_src: true
+#- name: Install packages
+#  package:
+#        name:
+#              - dnsmasq
+#        state: present
 
 # This task can be commented to avoid troubles during test
 #   with systemd and docker.

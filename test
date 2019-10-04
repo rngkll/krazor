@@ -1,0 +1,68 @@
+--> [36mValidating schema /home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/molecule.yml.[0m
+[32mValidation completed successfully.[0m
+--> [36mTest matrix[0m
+    
+└── default
+    ├── dependency
+    ├── create
+    ├── prepare
+    └── converge
+    
+--> [36mScenario: 'default'[0m
+--> [36mAction: 'dependency'[0m
+[33mSkipping, missing the requirements file.[0m
+--> [36mScenario: 'default'[0m
+--> [36mAction: 'create'[0m
+[33mSkipping, instances already created.[0m
+--> [36mScenario: 'default'[0m
+--> [36mAction: 'prepare'[0m
+[33mSkipping, prepare playbook not configured.[0m
+--> [36mScenario: 'default'[0m
+--> [36mAction: 'converge'[0m
+DEBUG: ANSIBLE ENVIRONMENT
+---
+ANSIBLE_CONFIG: /home/kmoragas/.cache/molecule/ansible-role-krazor/default/ansible.cfg
+ANSIBLE_FILTER_PLUGINS: /home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/molecule/provisioner/ansible/plugins/filters:/home/kmoragas/.cache/molecule/ansible-role-krazor/default/plugins/filters:/home/kmoragas/Works/gitlab/ansible-role-krazor/plugins/filters
+ANSIBLE_LIBRARY: /home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/molecule/provisioner/ansible/plugins/libraries:/home/kmoragas/.cache/molecule/ansible-role-krazor/default/library:/home/kmoragas/Works/gitlab/ansible-role-krazor/library
+ANSIBLE_ROLES_PATH: /home/kmoragas/.cache/molecule/ansible-role-krazor/default/roles:/home/kmoragas/Works/gitlab
+
+DEBUG: MOLECULE ENVIRONMENT
+---
+MOLECULE_DEBUG: 'True'
+MOLECULE_DEPENDENCY_NAME: galaxy
+MOLECULE_DRIVER_NAME: docker
+MOLECULE_ENV_FILE: /home/kmoragas/Works/gitlab/ansible-role-krazor/.env.yml
+MOLECULE_EPHEMERAL_DIRECTORY: /home/kmoragas/.cache/molecule/ansible-role-krazor/default
+MOLECULE_FILE: /home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/molecule.yml
+MOLECULE_INSTANCE_CONFIG: /home/kmoragas/.cache/molecule/ansible-role-krazor/default/instance_config.yml
+MOLECULE_INVENTORY_FILE: /home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory/ansible_inventory.yml
+MOLECULE_LINT_NAME: yamllint
+MOLECULE_PROJECT_DIRECTORY: /home/kmoragas/Works/gitlab/ansible-role-krazor
+MOLECULE_PROVISIONER_LINT_NAME: ansible-lint
+MOLECULE_PROVISIONER_NAME: ansible
+MOLECULE_SCENARIO_DIRECTORY: /home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default
+MOLECULE_SCENARIO_NAME: default
+MOLECULE_STATE_FILE: /home/kmoragas/.cache/molecule/ansible-role-krazor/default/state.yml
+MOLECULE_VERIFIER_LINT_NAME: flake8
+MOLECULE_VERIFIER_NAME: testinfra
+MOLECULE_VERIFIER_TEST_DIRECTORY: /home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/tests
+
+DEBUG: SHELL REPLAY
+ANSIBLE_CONFIG=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/ansible.cfg ANSIBLE_FILTER_PLUGINS=/home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/molecule/provisioner/ansible/plugins/filters:/home/kmoragas/.cache/molecule/ansible-role-krazor/default/plugins/filters:/home/kmoragas/Works/gitlab/ansible-role-krazor/plugins/filters ANSIBLE_LIBRARY=/home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/molecule/provisioner/ansible/plugins/libraries:/home/kmoragas/.cache/molecule/ansible-role-krazor/default/library:/home/kmoragas/Works/gitlab/ansible-role-krazor/library ANSIBLE_ROLES_PATH=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/roles:/home/kmoragas/Works/gitlab MOLECULE_DEBUG=True MOLECULE_DEPENDENCY_NAME=galaxy MOLECULE_DRIVER_NAME=docker MOLECULE_ENV_FILE=/home/kmoragas/Works/gitlab/ansible-role-krazor/.env.yml MOLECULE_EPHEMERAL_DIRECTORY=/home/kmoragas/.cache/molecule/ansible-role-krazor/default MOLECULE_FILE=/home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/molecule.yml MOLECULE_INSTANCE_CONFIG=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/instance_config.yml MOLECULE_INVENTORY_FILE=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory/ansible_inventory.yml MOLECULE_LINT_NAME=yamllint MOLECULE_PROJECT_DIRECTORY=/home/kmoragas/Works/gitlab/ansible-role-krazor MOLECULE_PROVISIONER_LINT_NAME=ansible-lint MOLECULE_PROVISIONER_NAME=ansible MOLECULE_SCENARIO_DIRECTORY=/home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default MOLECULE_SCENARIO_NAME=default MOLECULE_STATE_FILE=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/state.yml MOLECULE_VERIFIER_LINT_NAME=flake8 MOLECULE_VERIFIER_NAME=testinfra MOLECULE_VERIFIER_TEST_DIRECTORY=/home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/tests
+
+DEBUG: COMMAND
+/home/kmoragas/Works/gitlab/ansible-role-razor/.env/bin/ansible-playbook --skip-tags=molecule-notest,notest --diff --inventory=/home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory /home/kmoragas/Works/gitlab/ansible-role-krazor/molecule/default/playbook.yml -vvv
+
+    [0;34mansible-playbook 2.8.5[0m
+    [0;34m  config file = /home/kmoragas/.cache/molecule/ansible-role-krazor/default/ansible.cfg[0m
+    [0;34m  configured module search path = ['/home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/molecule/provisioner/ansible/plugins/libraries', '/home/kmoragas/.cache/molecule/ansible-role-krazor/default/library', '/home/kmoragas/Works/gitlab/ansible-role-krazor/library'][0m
+    [0;34m  ansible python module location = /home/kmoragas/Works/gitlab/ansible-role-razor/.env/lib/python3.6/site-packages/ansible[0m
+    [0;34m  executable location = /home/kmoragas/Works/gitlab/ansible-role-razor/.env/bin/ansible-playbook[0m
+    [0;34m  python version = 3.6.8 (default, Aug 20 2019, 17:12:48) [GCC 8.3.0][0m
+    [0;34mUsing /home/kmoragas/.cache/molecule/ansible-role-krazor/default/ansible.cfg as config file[0m
+    [0;34mhost_list declined parsing /home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory/ansible_inventory.yml as it did not pass it's verify_file() method[0m
+    [0;34mscript declined parsing /home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory/ansible_inventory.yml as it did not pass it's verify_file() method[0m
+    [0;34mParsed /home/kmoragas/.cache/molecule/ansible-role-krazor/default/inventory/ansible_inventory.yml inventory source with yaml plugin[0m
+    [0;34mRead vars_file 'testvars.yml'[0m
+    [0;34mRead vars_file 'testvars.yml'[0m
+    [0;34mRead vars_file 'testvars.yml'[0m

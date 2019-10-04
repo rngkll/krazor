@@ -7,10 +7,8 @@ lint:
   name: yamllint
 platforms:
   - name: instance
-    image: centos:7
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
+#    image: centos:7
+    image: rngkll/centos7-systemctl-replacement:firsttry
 provisioner:
   name: ansible
   lint:
