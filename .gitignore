@@ -38,3 +38,6 @@ tests/test_plugins
 
 # mac osx
 .DS_Store
+
+# roproject
+.ropeproject/
