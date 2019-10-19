@@ -1,10 +1,4 @@
 ---
-#- name: Install packages
-#  package:
-#        name:
-#              - dnsmasq
-#        state: present
-
 # This task can be commented to avoid troubles during test
 #   with systemd and docker.
 - name: Enable razor server
