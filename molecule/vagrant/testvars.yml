@@ -9,7 +9,6 @@ postgresql_databases:
 postgresql_users:
   - name: razor
     password: RaZordbPass
-    db: razor_prd
 
 # defaults file for ansible-dnsmasq
 
