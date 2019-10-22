@@ -61,6 +61,7 @@ galaxy_info:
 
 dependencies:
   - nginxinc.nginx
+  - geerlingguy.postgresql
   - mrlesmithjr.dnsmasq
   - rngkll.razor
 

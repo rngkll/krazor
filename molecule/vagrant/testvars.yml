@@ -4,6 +4,13 @@ db_user: razor
 db_name: razor_prd
 db_password: RaZordbPass
 
+postgresql_databases:
+  - name: razor_prd
+postgresql_users:
+  - name: razor
+    password: RaZordbPass
+    db: razor_prd
+
 # defaults file for ansible-dnsmasq
 
 # Define specific interfaces to listen on

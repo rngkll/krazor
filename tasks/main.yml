@@ -15,3 +15,13 @@
   systemd:
         name: razor-server
         enabled: true
+
+- name: initialize database
+  become: yes
+  become_user: razor
+  command: /opt/puppetlabs/bin/razor-admin -e production migrate-database
+
+- name: Restart razor service
+  service:
+    name: razor-server
+    state: restarted
