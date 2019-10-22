@@ -1,6 +1,20 @@
 ---
-# This task can be commented to avoid troubles during test
-#   with systemd and docker.
+- name: Copy bootstrap.ipxe
+  copy:
+    src: files/tftp/bootstrap.ipxe
+    dest: /var/lib/tftpboot/bootstrap.ipxe
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy undionly.kpxe
+  copy:
+    src: files/tftp/undionly.kpxe
+    dest: /var/lib/tftpboot/undionly.kpxe
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Enable razor server
   systemd:
         name: razor-server
