@@ -1,0 +1,9 @@
+---
+internal_interface: eth0
+external_interface: eth1
+network_range_start: 192.168.1.100
+network_range_end: 192.168.1.100
+db_user: razor
+db_name: razor_prd
+db_password: RaZordbPass
+

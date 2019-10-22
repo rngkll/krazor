@@ -1,19 +1,15 @@
 ---
-- name: Copy bootstrap.ipxe
+- name: Copy tftp files
   copy:
-    src: files/tftp/bootstrap.ipxe
-    dest: /var/lib/tftpboot/bootstrap.ipxe
+    src: files/tftp/{{ item }}
+    dest: /var/lib/tftpboot/
     owner: root
     group: root
     mode: '0644'
-
-- name: Copy undionly.kpxe
-  copy:
-    src: files/tftp/undionly.kpxe
-    dest: /var/lib/tftpboot/undionly.kpxe
-    owner: root
-    group: root
-    mode: '0644'
+  loop:
+    - undionly.kpxe
+    - bootstrap.ipxe
+    - ipxe.efi
 
 - name: Enable razor server
   systemd:

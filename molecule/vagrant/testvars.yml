@@ -93,7 +93,7 @@ dnsmasq_do_not_listen_on_interfaces:
   # - eth0
 
 # Defines if DHCP services are provided by DNSMASQ
-dnsmasq_enable_dhcp: false
+dnsmasq_enable_dhcp: true
 
 # Defines if forwarders should be used
 dnsmasq_enable_forwarders: true
