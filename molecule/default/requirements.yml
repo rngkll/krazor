@@ -1,0 +1,5 @@
+---
+- src: geerlingguy.postgresql
+- src: rngkll.razor
+- src: mrlesmithjr.dnsmasq
+  version: v1.1

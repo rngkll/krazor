@@ -1,31 +1,27 @@
 ---
-- name: Add puppetlabs repository
-  yum:
-        name: http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
-        state: present
+- name: Copy tftp files
+  copy:
+    src: files/tftp/{{ item }}
+    dest: /var/lib/tftpboot/
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - undionly.kpxe
+    - bootstrap.ipxe
+    - ipxe.efi
 
-- name: Install packages
-  yum:
-        name:
-              - razor-server
-              - rubygems
-              - ipmitool
-        state: present
-
-- name: Apply razor configuration file
-  template:
-        src: templates/config.yaml.j2
-        dest: /etc/puppetlabs/razor-server/config.yaml
-
-- name: Download microkernel
-  unarchive:
-        src: http://pup.pt/razor-microkernel-latest
-        dest: /opt/puppetlabs/server/data/razor-server/repo
-        remote_src: true
-
-# This task can be commented to avoid troubles during test
-#   with systemd and docker.
 - name: Enable razor server
   systemd:
         name: razor-server
         enabled: true
+
+- name: initialize database
+  become: yes
+  become_user: razor
+  command: /opt/puppetlabs/bin/razor-admin -e production migrate-database
+
+- name: Restart razor service
+  service:
+    name: razor-server
+    state: restarted

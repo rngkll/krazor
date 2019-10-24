@@ -20,3 +20,6 @@ RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y pyth
     elif [ $(command -v zypper) ]; then zypper refresh && zypper install -y python sudo bash python-xml iproute2 && zypper clean -a; \
     elif [ $(command -v apk) ]; then apk update && apk add --no-cache python sudo bash ca-certificates; \
     elif [ $(command -v xbps-install) ]; then xbps-install -Syu && xbps-install -y python sudo bash ca-certificates iproute2 && xbps-remove -O; fi
+
+ADD https://raw.githubusercontent.com/gdraheim/docker-systemctl-images/master/files/docker/systemctl.py /usr/bin/systemctl
+RUN chmod +x /usr/bin/systemctl
