@@ -1,0 +1,23 @@
+---
+#  Tasks that are executed in every server
+
+- name: Install packages
+  yum:
+    name:
+      - dhcp
+    state: present
+
+- name: Enable service dhcpd, and not touch the state
+  service:
+    name: dhcpd
+    enabled: yes
+
+- name: Apply dhcp template
+  template:
+    src: dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+
+- name: Restart dhcpd service
+  service:
+    name: dhcpd
+    state: restarted 
