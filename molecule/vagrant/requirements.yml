@@ -1,6 +1,4 @@
 ---
 - src: nginxinc.nginx
 - src: geerlingguy.postgresql
-- src: mrlesmithjr.dnsmasq
-  version: v1.1
 - src: rngkll.razor

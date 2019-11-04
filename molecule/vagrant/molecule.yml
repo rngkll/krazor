@@ -10,6 +10,15 @@ lint:
 platforms:
   - name: instance
     box: centos/7
+    interfaces:
+      - network_name: private_network
+        ip: '192.168.69.1'
+  - name: instance-client
+    box: centos/7
+    interfaces:
+      - auto_config: false
+        network_name: private_network
+        type: dhcp
 provisioner:
   name: ansible
   lint:

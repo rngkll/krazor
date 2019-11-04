@@ -1,0 +1,34 @@
+---
+#  Tasks that are executed in every server
+
+- name: Install packages
+  yum:
+    name:
+      - tftp-server
+    state: present
+
+- name: Enable service tftp, and not touch the state
+  service:
+    name: tftp
+    enabled: yes
+
+- name: Copy tftp files
+  copy:
+    src: files/tftp/{{ item }}
+    dest: /var/lib/tftpboot/
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - undionly.kpxe
+    - ipxe.efi
+
+- name: Apply bootstrap.ipxe templatee
+  template:
+    src: bootstrap.ipxe.j2
+    dest: /var/lib/tftpboot/bootstrap.ipxe
+
+- name: Restart tftp service
+  service:
+    name: tftp
+    state: restarted 

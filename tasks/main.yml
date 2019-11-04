@@ -1,15 +1,14 @@
 ---
-- name: Copy tftp files
-  copy:
-    src: files/tftp/{{ item }}
-    dest: /var/lib/tftpboot/
-    owner: root
-    group: root
-    mode: '0644'
-  loop:
-    - undionly.kpxe
-    - bootstrap.ipxe
-    - ipxe.efi
+- name: Install packages to make live easier.
+  package:
+    name: vim
+    state: present
+
+- name: Include tftp config tasks
+  include: tftp.yml
+
+- name: Include dhcpd config tasks
+  include: dhcpd.yml
 
 - name: Enable razor server
   systemd:
@@ -20,8 +19,3 @@
   become: yes
   become_user: razor
   command: /opt/puppetlabs/bin/razor-admin -e production migrate-database
-
-- name: Restart razor service
-  service:
-    name: razor-server
-    state: restarted

@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: instance
   become: yes
   roles:
     - role: ansible-role-krazor
