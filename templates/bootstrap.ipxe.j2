@@ -20,7 +20,7 @@ set dhcp_mac net0$${net0/mac:hexhyp}
 
 
 :chain_boot
-chain http://{{ ansible_eth1.ipv4.address }}:8150/svc/boot?net0=${net0/mac:hexhyp}&dhcp_mac=${dhcp_mac}&serial=${serial}&asset=${asset}&uuid=${uuid}&fact_boot_type=${platform} || goto error
+chain http://{{ internal_ip }}:8150/svc/boot?net0=${net0/mac:hexhyp}&dhcp_mac=${dhcp_mac}&serial=${serial}&asset=${asset}&uuid=${uuid}&fact_boot_type=${platform} || goto error
 echo successfully completed the chain-loaded script; booting locally with 'exit'
 exit
 
