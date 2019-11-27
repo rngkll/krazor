@@ -19,3 +19,4 @@
   become: yes
   become_user: razor
   command: /opt/puppetlabs/bin/razor-admin -e production migrate-database
+  notify: Restart razor service
