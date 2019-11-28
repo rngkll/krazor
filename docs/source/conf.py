@@ -47,14 +47,14 @@ global_substitutions = {
     "DEFAULT_VAR_NAME": 'upgrade',
     "DEPLOYMENT_IMG": ".. image:: " + img_url
     + "deployment.png\n   :alt: deployment",
-    "REPO_LINK":  "`Gitlab repository <https://gitlab.com/"
-    + author + "/ansible-role-krazor>`_.",
+    "REPO_LINK":  "`Repository <https://gitlab.com/" + author
+    + "/ansible-role-krazor>`_",
     "MAIN_IMG": ".. image:: " + img_url + "main.png\n   :alt: main",
     "PROJECT": project,
     "READTHEDOCS_BADGE": ".. image:: https://readthedocs.org/projects/"
     + project + "/badge\n   :alt: readthedocs",
     "READTHEDOCS_LINK": "`readthedocs <https://" + project +
-    ".readthedocs.io/en/latest/>`_.",
+    ".readthedocs.io/en/latest/>`_",
 }
 
 substitutions = [

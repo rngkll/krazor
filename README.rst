@@ -13,7 +13,7 @@ krazor
 Full documentation on `readthedocs
 <https://krazor.readthedocs.io/en/latest/>`_.
 
-Source code on `Gitlab repository
+Source code on `Repository
 <https://gitlab.com/rngkll/ansible-role-krazor>`_.
 
 
@@ -238,8 +238,7 @@ MIT. See the LICENSE file for more details.
 Links
 *****
 
-* `Gitlab repository
-   <https://gitlab.com/rngkll/ansible-role-krazor>`_.
+* `Repository <https://gitlab.com/rngkll/ansible-role-krazor>`_.
 
 * `readthedocs <https://krazor.readthedocs.io/en/latest/>`_.
 
