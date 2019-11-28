@@ -3,8 +3,8 @@
 # @file docthis
 # @brief Generate documentation using sphinx.
 
-# Path to the project for which to generate documentation, if not
-# especified, the current path will be used.
+# Path to the project used as the source to generate documentation, if not
+# specified the current path will be used.
 PROJECT_PATH=$(pwd)
 
 # requirements.txt file contents.
@@ -15,7 +15,7 @@ Sphinx-Substitution-Extensions
 sphinx_rtd_theme'
 
 # conf.py file contents.
-CONFIGURATION_CONTENTS='# Configuration file for Sphinx documentation builder.
+CONFIGURATION_CONTENTS='# Configuration for Sphinx documentation builder.
 
 import os
 import sys
@@ -45,23 +45,25 @@ html_theme = "sphinx_rtd_theme"
 
 master_doc = "index"
 
-images_url = "|IMAGES_URL_GENERATED_VALUE|"
+img_url = "|IMG_URL_GENERATED_VALUE|"
+
+ci_url_base = "https://travis-ci.org/"
+
+ci_url = ci_url_base + author + "/" + project
 
 global_substitutions = {
-    "AUTHOR_IMAGE": ".. image:: " + images_url +
+    "AUTHOR_IMG": ".. image:: " + img_url +
     "/author.png\\n   :alt: author",
     "AUTHOR_SLOGAN": "The travelling vaudeville villain.",
-    "GITHUB_REPO_LINK":  "`Github repository <https://github.com/"
+    "CI_BADGE": ".. image:: " + ci_url + ".svg\\n   :alt: travis",
+    "CI_LINK":  "`Travis CI <" + ci_url + ">`_.",
+    "REPO_LINK":  "`Github repository <https://github.com/"
     + author + "/" + project + ">`_.",
     "PROJECT": project,
-    "READTHEDOCS_IMAGE": ".. image:: https://readthedocs.org/projects/"
+    "READTHEDOCS_BADGE": ".. image:: https://readthedocs.org/projects/"
     + project + "/badge\\n   :alt: readthedocs",
     "READTHEDOCS_LINK": "`readthedocs <https://" + project +
-    ".readthedocs.io/en/latest/>`_.",
-    "TRAVIS_CI_IMAGE":  ".. image:: https://api.travis-ci.org/" + author +
-    "/" + project + ".svg\\n   :alt: travis",
-    "TRAVIS_CI_LINK":  "`Travis CI building <https://travis-ci.org/"
-    + author + "/" + project + ">`_.",
+    ".readthedocs.io/en/latest/>`_."
 }
 
 substitutions = [
@@ -76,26 +78,26 @@ sphinx:
   configuration: docs/source/conf.py
 
 python:
-  version: 3.5
+  version: 3.7
   install:
     - requirements: docs/requirements.txt"
 
 # index.rst file contents.
 INDEX_CONTENTS="|PROJECT_GENERATED_NAME|
-==============================================================================
+=============================================================================
 
-|TRAVIS_CI_IMAGE|
+|CI_BADGE|
 
-|READTHEDOCS_IMAGE|
+|READTHEDOCS_BADGE|
 
 My project short description.
 
 Full documentation on |READTHEDOCS_LINK|.
 
-Source code on |GITHUB_REPO_LINK|.
+Source code on |REPO_LINK|.
 
 Contents
-==============================================================================
+=============================================================================
 
 .. toctree::
 
@@ -119,13 +121,13 @@ Contents
 
 # description.rst file contents.
 DESCRIPTION_CONTENTS='Description
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 Describe me.'
 
 # usage.rst file contents
 USAGE_CONTENTS="Usage
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 Download the script, give it execution permissions and execute it:
 
@@ -137,7 +139,7 @@ Download the script, give it execution permissions and execute it:
 
 # variables.rst file contents.
 VARIABLES_CONTENTS="Variables
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 The following variables are supported:
 
@@ -155,13 +157,13 @@ The following variables are supported:
 
 # requirements.rst file contents.
 REQUIREMENTS_CONTENTS='Requirements
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 \- Python 3.'
 
 # compatibility.rst file contents.
 COMPATIBILITY_CONTENTS='Compatibility
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 \- Debian buster.
 
@@ -173,23 +175,23 @@ COMPATIBILITY_CONTENTS='Compatibility
 
 # license.rst file contents.
 LICENSE_CONTENTS='License
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 MIT. See the LICENSE file for more details.'
 
 # links.rst file contents.
 LINKS_CONTENTS='Links
--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
-|GITHUB_REPO_LINK|
+|REPO_LINK|
 
-|TRAVIS_CI_LINK|'
+|CI_LINK|'
 
 # author.rst file contents.
 AUTHOR_CONTENTS='Author
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
-|AUTHOR_IMAGE|
+|AUTHOR_IMG|
 
 |AUTHOR_SLOGAN|'
 
@@ -253,7 +255,7 @@ function generate() {
 
     local project_year=$(date +"%Y")
 
-    local images_url=$(get_images_url $project_path)
+    local img_url=$(get_img_url $project_path)
 
     # Setup everything for new projects.
     if ! [[ -f $project_path/docs/source/conf.py ]]; then
@@ -300,7 +302,7 @@ function generate() {
             sed -i -E "s/\|AUTHOR_GENERATED_NAME\|/$author/g" $project_path/docs/source/*.*
             sed -i -E "s/\|PROJECT_GENERATED_NAME\|/$project/g" $project_path/docs/source/*.*
             sed -i -E "s/\|YEAR_GENERATED_VALUE\|/$project_year/g" $project_path/docs/source/*.*
-            sed -i -E "s/\|IMAGES_URL_GENERATED_VALUE\|/$(escape_url $images_url)/g" $project_path/docs/source/*.*
+            sed -i -E "s/\|IMG_URL_GENERATED_VALUE\|/$(escape_url $img_url)/g" $project_path/docs/source/*.*
         fi
 
         # Install requirements if not already installed.
@@ -333,7 +335,7 @@ function generate() {
 # This function assumes:
 #   - The project has a file structure as created by generate().
 #   - The index.rst file contains a blank new line at the end.
-#   - The ndex.rst file contains the :toctree: directive.
+#   - The index.rst file contains the :toctree: directive.
 #
 # @arg $1 string Optional project path. Default to current path.
 #
@@ -363,7 +365,7 @@ function generate_rst() {
 
     # Recreate the file to append content.
     if [[ -f $project_path/docs/build/rst/index.rst ]]; then
-       readthedocs_to_rst $project_path/docs/build/rst/index.rst $project
+       readthedocs_to_rst $project_path/docs/build/rst/index.rst $project_path
        cat $project_path/docs/build/rst/index.rst > $project_path/README-single.rst
        printf '\n' >> $project_path/README-single.rst
     fi
@@ -377,7 +379,7 @@ function generate_rst() {
         if [[ $items_found == true ]] && ! [[ -z "$LINE"  ]]; then
 
             # Apply conversion from readthedocs to common rst.
-            readthedocs_to_rst $project_path/docs/build/rst/${LINE}.rst $project
+            readthedocs_to_rst $project_path/docs/build/rst/${LINE}.rst $project_path
 
             if [[ -f $project_path/docs/build/rst/${LINE}.rst ]]; then
                 cat $project_path/docs/build/rst/${LINE}.rst >> $project_path/README-single.rst
@@ -405,15 +407,13 @@ function get_author() {
     [[ -d $1 ]] && project_path="$( cd "$1" ; pwd -P )"
 
     local author=$(get_variable 'author' $project_path)
-    if [ $? -eq 0 ]; then
-        ! [[ -z $author ]] && echo $author && return 0
-    fi
+    ! [[ -z $author ]] && echo $author && return 0
 
     whoami && return 0
 
 }
 
-# @description Get the images repository url.
+# @description Get the images repository URL.
 #
 # This function assumes:
 #   - The project has a file structure as created by generate().
@@ -423,26 +423,125 @@ function get_author() {
 # @exitcode 0 If successful.
 # @exitcode 1 On failure.
 #
-# @stdout echo author's name.
-function get_images_url() {
+# @stdout echo repository images URL.
+function get_img_url() {
 
     local project_path=$(pwd)
     [[ -d $1 ]] && project_path="$( cd "$1" ; pwd -P )"
-
+    local img_url=$(get_variable 'img_url' $project_path)
+    if ! [[ -z "$img_url" ]]; then
+        escape_url $img_url
+        return 0
+    fi
     local author=$(get_author $project_path)
     local project=$(get_project $project_path)
+    echo "https://raw.githubusercontent.com/$author/$project/master/img/"
+    return 0
 
-    local img_url_base=$(get_variable 'img_url_base' $project_path)
-    if ! [[ -z $img_url_base ]]; then
-        local img_url_repo=$(get_variable 'img_url_repo' $project_path)
-        if ! [[ -z $img_url_repo ]]; then
-            echo ${img_url_base}${author}${img_url_repo}${project}
-            return 0
+}
+
+# @description Get the continuous integration repository URL.
+#
+# This function assumes:
+#   - The project has a file structure as created by generate().
+#
+# @arg $1 string Optional project path. Default to current path.
+#
+# @exitcode 0 If successful.
+# @exitcode 1 On failure.
+#
+# @stdout echo continuous integration URL.
+function get_ci_url() {
+
+    local project_path=$(pwd)
+    [[ -d $1 ]] && project_path="$( cd "$1" ; pwd -P )"
+    local ci_url=$(get_variable 'ci_url' $project_path)
+    if ! [[ -z "$ci_url" ]]; then 
+        escape_url $ci_url
+        return 0
+    fi
+    local author=$(get_author $project_path)
+    local project=$(get_project $project_path)
+    echo "https://travis-ci.org/$author/$project/"
+    return 0
+
+}
+
+# @description Get a images or continuous integration URL.
+#
+# This function assumes:
+#   - The project has a file structure as created by generate().
+#
+# @arg $1 string Required variable name.
+# @arg $2 string Optional project path. Default to current path.
+#
+# @exitcode 0 If successful.
+# @exitcode 1 On failure.
+#
+# @stdout echo URL.
+function get_variable() {
+
+    [[ -z $1 ]] && return 1
+    local variable_name=$1
+
+    local project_path=$(pwd)
+    [[ -d $2 ]] && project_path="$( cd "$2" ; pwd -P )"
+
+    local variable_value=$(get_variable_from_conf $variable_name $project_path)
+
+    if ! [[ -z $variable_value ]]; then
+        if [[ "$variable_value" =~ 'author' ]]; then
+            if ! [[ -z $author ]]; then
+                variable_value="${variable_value//author/$author}"
+            fi
         fi
-        echo $img_url_base && return 0
+
+        if [[ "$variable_value" =~ 'project' ]]; then
+            if ! [[ -z $project ]]; then
+                variable_value="${variable_value//project/$project}"
+            fi
+        fi
+
+        if [[ "$variable_value" =~ 'img_url' ]] &&
+               ! [[ "$variable_value" =~ 'img_url_base' ]] &&
+               ! [[ "$variable_value" =~ 'img_url_part' ]]; then
+            local img_url=$(get_variable 'img_url' $project_path)
+            if ! [[ -z $img_url_base ]]; then
+                variable_value="${variable_value//img_url/$img_url}"
+            fi
+        fi
+
+        if [[ "$variable_value" =~ 'img_url_base' ]]; then
+            local img_url_base=$(get_variable 'img_url_base' $project_path)
+            if ! [[ -z $img_url_base ]]; then
+                variable_value="${variable_value//img_url_base/$img_url_base}"
+            fi
+        fi
+
+        if [[ "$variable_value" =~ 'img_url_part' ]]; then
+            local img_url_part=$(get_variable 'img_url_part' $project_path)
+            if ! [[ -z $img_url_part ]]; then
+                variable_value="${variable_value//img_url_part/$img_url_part}"
+            fi
+        fi
+
+        if [[ "$variable_value" =~ 'ci_url_base' ]]; then
+            local ci_url_base=$(get_variable 'ci_url_base' $project_path)
+            if ! [[ -z $ci_url_base ]]; then
+                variable_value="${variable_value//ci_url_base/$ci_url_base}"
+            fi
+        fi
+
+        # Remove '+'.
+        variable_value="${variable_value//+/\/}"
+        # Remove quotes.
+        variable_value="${variable_value//\"/}"
+        variable_value="${variable_value//\'/}"
+        variable_value=$(sanitize "$variable_value")
+        echo $variable_value && return 0
     fi
 
-    echo "https://raw.githubusercontent.com/$author/images/master/$project"
+    echo ''
     return 0
 
 }
@@ -469,34 +568,6 @@ function get_project() {
 
 }
 
-# @description Get a variable from the configuration file.
-#
-# @arg $1 string Required variable name.
-# @arg $2 string Optional project path. Default to current path.
-#
-# @exitcode 0 If successful.
-# @exitcode 1 On failure.
-#
-# @stdout echo variable value.
-function get_variable() {
-
-    [[ -z $1 ]] || ! [[ -f $project_path/docs/source/conf.py ]] && return 1
-    local variable_name=$1    
-
-    local project_path=$(pwd)
-    [[ -d $2 ]] && project_path="$( cd "$2" ; pwd -P )"
-
-    local variable_value=$(cat $project_path/docs/source/conf.py | sed -n "s/^.*${variable_name}\s*\=\s*\s*\(\S*\)\s*.*$/\1/p")
-
-    # Remove quotes.
-    variable_value="${variable_value%\"}"
-    variable_value="${variable_value#\"}"
-    variable_value="${variable_value%\'}"
-    variable_value="${variable_value#\'}"
-    echo $variable_value
-    return 0
-}
-
 # @description Get bash parameters.
 #
 # Accepts:
@@ -520,6 +591,72 @@ function get_parameters() {
     done
 
     return 0
+}
+
+# @description Get a variable from the configuration file.
+#
+# @arg $1 string Required variable name.
+# @arg $2 string Optional project path. Default to current path.
+#
+# @exitcode 0 If successful.
+# @exitcode 1 On failure.
+#
+# @stdout echo variable value.
+function get_variable_from_conf() {
+
+    [[ -z $1 ]] && return 1
+    local variable_name=$1
+
+    local project_path=$(pwd)
+    [[ -d $2 ]] && project_path="$( cd "$2" ; pwd -P )"
+    ! [[ -f $project_path/docs/source/conf.py ]] && echo '' && return 0
+
+    local variable_value=''
+
+    if [[ "$variable_name" == 'img_url' ]] ||
+           [[ "$variable_name" == 'ci_url' ]]; then 
+        variable_value=$(get_variable_line "$variable_name" "$project_path")
+
+    else
+        variable_value=$(cat $project_path/docs/source/conf.py | sed -n "s/^.*${variable_name}\s*\=\s*\(\S*\)\s*.*$/\1/p")
+    fi
+
+    # Remove quotes.
+    variable_value="${variable_value//\"/}"
+    variable_value="${variable_value//\"/}"
+    variable_value="${variable_value//\'/}"
+    variable_value="${variable_value//\'/}"
+    echo $variable_value
+    return 0
+}
+
+# @description Get a variable line from the configuration file.
+#
+# @arg $1 string Required variable name.
+# @arg $2 string Optional project path. Default to current path.
+#
+# @exitcode 0 If successful.
+# @exitcode 1 On failure.
+#
+# @stdout echo variable value.
+function get_variable_line() {
+
+    [[ -z $1 ]] && return 1
+    local variable_name=$1
+
+    local project_path=$(pwd)
+    [[ -d $2 ]] && project_path="$( cd "$2" ; pwd -P )"
+    ! [[ -f $project_path/docs/source/conf.py ]] && return 1
+
+    local variable_value=''
+    variable_value=$(grep "$variable_name =" $project_path/docs/source/conf.py)
+    # Remove spaces.
+    variable_value="${variable_value//\ /}"
+    # Remove variable_name=.
+    variable_value="${variable_value//$variable_name=/}"
+    echo "$variable_value"
+    return 0
+    
 }
 
 # @description Shows help message.
@@ -559,12 +696,8 @@ function main() {
 
 # @description Replace reference from readthedocs format to standard rst.
 #
-# This function assumes:
-#
-#  - A travis-ci enviroment exists for the current component.
-#  - An images repository exists the current user/project.
-#
-# See `this link <https://github.com/constrict0r/images>`_ for an example images repository.
+# See `this link <https://github.com/constrict0r/images>`_ for an example
+# images repository.
 #
 # @arg $1 string Path to file where to apply replacements.
 # @arg $2 string Optional project path. Default to current path.
@@ -582,26 +715,37 @@ function readthedocs_to_rst() {
 
     local author=$(get_author $project_path)
 
-    local images_url=$(get_images_url $project_path)
-    images_url=$(escape_url $images_url)
-
     local project=$(get_project $project_path)
+
+    local img_url=$(get_img_url $project_path)
+
+    local ci_url=$(get_ci_url $project_path)
 
     # Convert all `<text.rst>`_ references to `<#text>`.
     sed -i -E "s/\<([[:alpha:]]*[[:punct:]]*)+\.rst\>//g" $1
     sed -i -E 's/([[:alpha:]]+)\ <>/\1\ <#\1>/g' $1
 
-    # Replace travis status badge image.
-    sed -i -E "s/\[image\:\ travis\]\[image\]/\.\.\ image\:\:\ https\:\/\/api\.travis-ci\.org\/$author\/$project\.svg\\n   :alt: travis/g" $1
+    # Replace travis-ci status badge image.
+    sed -i -E "s@\[image\:\ travis\]\[image\]@\.\.\ image\:\:\ $ci_url\.svg\\n   :alt: travis@g" $1
+
+    # Replace gitlab-ci status badge image.
+   sed -i -E "s@\[image\:\ pipeline\]\[image\]@\.\.\ image\:\:\ https\:\/\/gitlab\.com\/$author/$project\/badges\/master\/pipeline\.svg\\n   :alt: pipeline@g" $1
 
     # Replace readthedocs status badge image.
-    sed -i -E "s/\[image\:\ readthedocs\]\[image\]/\.\.\ image\:\:\ https\:\/\/readthedocs\.org\/projects\/$project\/badge\\n   :alt: readthedocs/g" $1
+    sed -i -E "s@\[image\:\ readthedocs\]\[image\]@\.\.\ image\:\:\ https\:\/\/readthedocs\.org\/projects\/$project\/badge\\n   :alt: readthedocs@g" $1
 
-    # Replace coverage status badge image.
-    sed -i -E "s/\[image\:\ coverage\]\[image\]/\.\.\ image\:\:\ https\:\/\/coveralls\.io\/repos\/github\/$author\/$project\/badge\.svg\\n   :alt: coverage/g" $1
+    # Replace coverage status badge image on github using coveralls.
+    if [[ "$ci_url" =~ 'github' ]]; then
+        sed -i -E "s@\[image\:\ coverage\]\[image\]@\.\.\ image\:\:\ https\:\/\/coveralls\.io\/repos\/github\/$author\/$project\/badge\.svg\\n   :alt: coverage@g" $1
+
+    # Replace coverage status badge image on gitlab.
+    else
+        sed -i -E "s@\[image\:\ coverage\]\[image\]@\.\.\ image\:\:\ https\:\/\/gitlab\.com\/$author\/$project\/badges\/master\/coverage\.svg\\n   :alt: coverage@g" $1
+
+    fi
 
     # Replace rest of images.
-    sed -i -E "s/\[image\:\ (.*)+\]\[image\]/\.\.\ image\:\:\ $images_url\1\.png\\n   :alt: \1/g" $1
+    sed -i -E "s@\[image\:\ (.*)+\]\[image\]@\.\.\ image\:\:\ $img_url\1\.png\\n   :alt: \1@g" $1
 
     return 0
 }

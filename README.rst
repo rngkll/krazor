@@ -2,8 +2,8 @@
 krazor
 ******
 
-.. image:: https://api.travis-ci.org/rngkll/krazor.svg
-   :alt: travis
+.. image:: https://gitlab.com/rngkll/krazor/badges/master/pipeline.svg
+   :alt: pipeline
 
 .. image:: https://readthedocs.org/projects/krazor/badge
    :alt: readthedocs
@@ -13,8 +13,8 @@ krazor
 Full documentation on `readthedocs
 <https://krazor.readthedocs.io/en/latest/>`_.
 
-Source code on `Github repository
-<https://github.com/rngkll/krazor>`_.
+Source code on `Gitlab repository
+<https://gitlab.com/rngkll/ansible-role-krazor>`_.
 
 
 Contents
@@ -127,7 +127,7 @@ This variable is set to *true* by default.
 
    # Including from terminal.
    ansible localhost -m include_role -a name=rngkll.krazor -K -e \
-       --extra-vars "upgrade=false" -K
+       "upgrade=false"
 
    # Including on a playbook.
    - hosts: servers
@@ -137,7 +137,7 @@ This variable is set to *true* by default.
 
    # To a playbook from terminal.
    ansible-playbook -i tests/inventory tests/test-playbook.yml -K -e \
-       --extra-vars "upgrade=false" -K
+       "upgrade=false"
 
 
 configuration
@@ -154,12 +154,12 @@ This variable is empty by default.
 ::
 
    # Using file path.
-   ansible localhost -m include_role -a name=rngkll.krazor \
-       --extra-vars "configuration=/home/username/my-config.yml" -K
+   ansible localhost -m include_role -a name=rngkll.krazor -K -e \
+       "configuration=/home/username/my-config.yml"
 
    # Using URL.
    ansible localhost -m include_role -a name=rngkll.krazor -K -e \
-       "configuration=https://my-url/my-config.yml
+       "configuration=https://my-url/my-config.yml"
 
 To see how to write  a configuration file see the *YAML* file format
 section.
@@ -206,13 +206,7 @@ Requirements
 
 * `Jinja2 <https://palletsprojects.com/p/jinja/>`_.
 
-* `Pip <https://pypi.org/project/pip/>`_.
-
 * `Python <https://www.python.org/>`_.
-
-* `PyYAML <https://pyyaml.org/>`_.
-
-* `Requests <https://2.python-requests.org/en/master/>`_.
 
 If you want to run the tests, you will also need:
 
@@ -244,11 +238,10 @@ MIT. See the LICENSE file for more details.
 Links
 *****
 
-* `Github repository <https://github.com/rngkll/krazor>`_.
+* `Gitlab repository
+   <https://gitlab.com/rngkll/ansible-role-krazor>`_.
 
 * `readthedocs <https://krazor.readthedocs.io/en/latest/>`_.
-
-* `Travis CI <https://travis-ci.org/rngkll/krazor>`_.
 
 
 UML
@@ -260,7 +253,7 @@ Deployment
 
 The full project structure is shown below:
 
-.. image:: https://raw.githubusercontent.com/rngkll/images/master/krazor/deployment.png
+.. image:: https://gitlab.com//rngkll/ansible-role-krazor/raw/master/img/deployment.png
    :alt: deployment
 
 
@@ -269,20 +262,15 @@ Main
 
 The project data flow is shown below:
 
-.. image:: https://raw.githubusercontent.com/rngkll/images/master/krazor/main.png
+.. image:: https://gitlab.com//rngkll/ansible-role-krazor/raw/master/img/main.png
    :alt: main
 
 
 Author
 ******
 
-.. image:: https://raw.githubusercontent.com/rngkll/images/master/krazor/author.png
+.. image:: https://gitlab.com//rngkll/ansible-role-krazor/raw/master/img/author.png
    :alt: author
 
 Jaquerespeis.
-
-Enjoy!!!
-
-.. image:: https://raw.githubusercontent.com/rngkll/images/master/krazor/enjoy.png
-   :alt: enjoy
 

@@ -12,8 +12,8 @@ COVERAGE_REPORT=false
 # b = bats, m = molecule, p = python.
 ONLY_TYPE=''
 
-# Path to the project for which to generate documentation, if not
-# especified, the current path will be used.
+# Path to the project where to run tests, if not specified the current path
+# will be used.
 PROJECT_PATH=$(pwd)
 
 # Python executable to use: python (python2) or python3.
@@ -200,7 +200,7 @@ function help() {
              execute the molecule and python tests only.'
     echo '-p <file_path> (project path): Optional absolute file path to the
              root directory of the project to test. if this
-             parameter is not espeficied, the current path will be used.'
+             parameter is not especified, the current path will be used.'
     echo "-r (recursive): Enter recursively each directory on project's root
              directory and execute every testme.sh script found."
     echo '-t (time): Show time report when finished'

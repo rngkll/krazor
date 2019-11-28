@@ -2,7 +2,7 @@
 *.retry
 
 # Binaries.
-*.png
+*.jpg
 
 # Buffers.
 *~
