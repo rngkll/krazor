@@ -1,15 +1,15 @@
 |PROJECT|
 ==============================================================================
 
-|TRAVIS_CI_IMAGE|
+|CI_BADGE|
 
-|READTHEDOCS_IMAGE|
+|READTHEDOCS_BADGE|
 
 `Ansible <https://www.ansible.com/>`_ to apply hardware provisioning.
 
 Full documentation on |READTHEDOCS_LINK|.
 
-Source code on |GITHUB_REPO_LINK|.
+Source code on |REPO_LINK|.
 
 Contents
 ==============================================================================
@@ -35,4 +35,3 @@ Contents
    uml
 
    author
-

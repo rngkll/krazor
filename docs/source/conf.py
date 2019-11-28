@@ -28,33 +28,33 @@ html_theme = "sphinx_rtd_theme"
 
 master_doc = "index"
 
-img_url_base = "https://raw.githubusercontent.com/"
+img_url_base = "https://gitlab.com/"
 
-img_url_repo = "/images/master/"
+img_url_part = "ansible-role-krazor/raw/master/img/"
 
-images_url = img_url_base + author + img_url_repo + project
+img_url = img_url_base + author + img_url_part
+
+ci_url_base = "https://gitlab.com/"
+
+ci_url = ci_url_base + author + "/ansible-role-krazor/pipelines"
 
 global_substitutions = {
-    "AUTHOR_IMAGE": ".. image:: " + images_url +
-    "/author.png\n   :alt: author",
+    "AUTHOR_IMG": ".. image:: " + img_url + "author.png\n   :alt: author",
     "AUTHOR_SLOGAN": "Jaquerespeis.",
+    "CI_BADGE": ".. image:: " + img_url_base + author
+    + "ansible-role-krazor/badges/master/pipeline.svg\n :alt: pipeline",
+    "CI_LINK": "`Gitlab CI <" + ci_url + ">`_",
     "DEFAULT_VAR_NAME": 'upgrade',
-    "DEPLOYMENT_IMAGE": ".. image:: " + images_url +
-    "/deployment.png\n   :alt: deployment",
-    "ENJOY_IMAGE": ".. image:: " + images_url + "/enjoy.png\n   :alt: enjoy",
-    "GITHUB_REPO_LINK":  "`Github repository <https://github.com/"
-    + author + "/" + project + ">`_.",
-    "MAIN_IMAGE": ".. image:: " + images_url +
-    "/main.png\n   :alt: main",
+    "DEPLOYMENT_IMG": ".. image:: " + img_url
+    + "deployment.png\n   :alt: deployment",
+    "REPO_LINK":  "`Gitlab repository <https://gitlab.com/"
+    + author + "/ansible-role-krazor>`_.",
+    "MAIN_IMG": ".. image:: " + img_url + "main.png\n   :alt: main",
     "PROJECT": project,
-    "READTHEDOCS_IMAGE": ".. image:: https://readthedocs.org/projects/"
+    "READTHEDOCS_BADGE": ".. image:: https://readthedocs.org/projects/"
     + project + "/badge\n   :alt: readthedocs",
     "READTHEDOCS_LINK": "`readthedocs <https://" + project +
     ".readthedocs.io/en/latest/>`_.",
-    "TRAVIS_CI_IMAGE": ".. image:: https://api.travis-ci.org/" + author +
-    "/" + project + ".svg\n   :alt: travis",
-    "TRAVIS_CI_LINK":  "`Travis CI <https://travis-ci.org/"
-    + author + "/" + project + ">`_.",
 }
 
 substitutions = [
