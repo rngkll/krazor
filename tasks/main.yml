@@ -1,5 +1,5 @@
 ---
-- name: Install packages to make live easier.
+- name: Install packages to make life easier.
   package:
     name: vim
     state: present
